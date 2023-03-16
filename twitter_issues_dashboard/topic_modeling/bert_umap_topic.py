@@ -3,7 +3,7 @@ import plotly.express as px
 from umap.umap_ import UMAP
 import hdbscan
 from transformers import AutoTokenizer, AutoModel
-
+import numpy as np
 
 class TopicModelingPipeline:
     def __init__(self, df):
@@ -18,6 +18,9 @@ class TopicModelingPipeline:
             inputs = self.tokenizer(text, return_tensors="pt", padding=True, truncation=True)
             outputs = self.model(**inputs)[1].detach().numpy()
             embeddings.append(outputs)
+                
+        # Convert embeddings to 2D array
+        embeddings = np.concatenate(embeddings, axis=0)
 
         # Perform dimensionality reduction with UMAP
         umap_embeddings = UMAP(
