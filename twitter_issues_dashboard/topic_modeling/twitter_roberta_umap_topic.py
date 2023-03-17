@@ -42,7 +42,7 @@ class TopicModelingPipeline:
 
         return umap_embeddings
 
-    def generate_hdbscan_clusters(self, umap_embeddings, min_cluster_size=10, min_samples=1, cluster_selection_epsilon=0.5):
+    def generate_hdbscan_clusters(self, umap_embeddings, min_cluster_size=10, min_samples=1, cluster_selection_epsilon=0.5, metric='euclidean'):
         # Generate topic clusters with HDBSCAN
         clusterer = hdbscan.HDBSCAN(
             min_cluster_size=min_cluster_size,
