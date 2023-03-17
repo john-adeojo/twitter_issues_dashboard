@@ -4,7 +4,9 @@ from nltk.corpus import stopwords
 
 
 class TextCleaner:
-    def __init__(self, stop_words=None):
+    def __init__(self, stop_words=None, stop_words_remove=False):
+        
+        self.stop_words_remove = stop_words_remove
         if stop_words:
             self.stop_words = stop_words
         else:
@@ -30,11 +32,13 @@ class TextCleaner:
         # Remove variations of "royal mail"
         text = re.sub(r'royal\s*mail', '', text, flags=re.IGNORECASE)
 
-        # Tokenize the text
+        # Tokenize the text and convert to lowercase
         tokens = word_tokenize(text)
+        tokens = [token.lower() for token in tokens]
 
         # Remove stop words
-        tokens = [token for token in tokens if token.lower() not in self.stop_words]
+        if self.stop_words_remove == True:
+            tokens = [token for token in tokens if token.lower() not in self.stop_words]
 
         # Lemmatize the tokens
         tokens = [self.lemmatizer.lemmatize(token) for token in tokens]
