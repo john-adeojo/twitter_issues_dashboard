@@ -33,7 +33,8 @@ class TopicModelingPipeline:
             n_components=n_components,
             n_neighbors=n_neighbors,
             metric=metric,
-            min_dist=min_dist
+            min_dist=min_dist,
+            random_state=42
         ).fit_transform(embeddings)
 
         # Visualize the UMAP embeddings
@@ -44,6 +45,7 @@ class TopicModelingPipeline:
 
     def generate_hdbscan_clusters(self, umap_embeddings, min_cluster_size=10, min_samples=1, cluster_selection_epsilon=0.5, metric='euclidean'):
         # Generate topic clusters with HDBSCAN
+        np.random.seed(42)
         clusterer = hdbscan.HDBSCAN(
             min_cluster_size=min_cluster_size,
             min_samples=min_samples,
@@ -51,16 +53,6 @@ class TopicModelingPipeline:
         ).fit(umap_embeddings)
 
         return clusterer.labels_
-
-    # def visualize_clusters(self, umap_embeddings, cluster_labels):
-    #     # Visualize the HDBSCAN clusters against the UMAP embeddings
-    #     fig = px.scatter(
-    #         x=umap_embeddings[:,0],
-    #         y=umap_embeddings[:,1],
-    #         color=cluster_labels,
-    #         hover_data=[self.df['cleaned_text']]
-    #     )
-    #     fig.show()
     
     def visualize_clusters(self, umap_embeddings, cluster_labels):
         # Generate a unique color for each cluster
