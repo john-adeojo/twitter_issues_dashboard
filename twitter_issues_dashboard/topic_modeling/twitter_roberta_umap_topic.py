@@ -67,35 +67,3 @@ class TopicModelingPipeline:
 
         fig.show()
 
-    
-#     def visualize_clusters(self, umap_embeddings, cluster_labels):
-#         # Generate a unique color for each cluster
-#         unique_labels = np.unique(cluster_labels)
-#         num_clusters = len(unique_labels)
-#         colors = px.colors.qualitative.Dark24[:num_clusters]
-
-#         # Create a dictionary that maps cluster IDs to their corresponding label names
-#         cluster_names = {}
-#         for label in unique_labels:
-#             cluster_names[label] = f'Cluster {label}'
-
-#         # Map each label to its corresponding color and name
-#         colors = [colors[np.where(unique_labels == label)[0][0]] for label in cluster_labels]
-#         legend_labels = [cluster_names[label] for label in cluster_labels]
-
-#         # Create the scatter plot
-#         fig = px.scatter(
-#             x=umap_embeddings[:,0],
-#             y=umap_embeddings[:,1],
-#             color=legend_labels,
-#             hover_data=[self.df['cleaned_text']],
-#             color_discrete_map=cluster_names,
-#             template='plotly_white'
-#         )
-
-#         # Update the legend labels
-#         if len(fig.data) == num_clusters:
-#             for i, label in enumerate(cluster_names.values()):
-#                 fig.data[i].name = label
-
-#         fig.show()

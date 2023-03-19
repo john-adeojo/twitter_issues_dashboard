@@ -9,6 +9,9 @@ class TextCleaner():
     def __init__(self, stop_words_remove=True):
         self.stop_words_remove = stop_words_remove
         self.stop_words = set(stopwords.words('english'))
+        self.stop_words.add('amp')
+        self.stop_words.add('christmas')
+        self.stop_words.add('royalmailhelp')
         self.lemmatizer = WordNetLemmatizer()
         
     def clean_text(self, text):
@@ -31,19 +34,19 @@ class TextCleaner():
         text = re.sub(r'royal\s*mail', '', text, flags=re.IGNORECASE)
         
         # Remove variations of "stamp"
-#         text = re.sub(r'stamp\w*', '', text, flags=re.IGNORECASE)
+        text = re.sub(r'stamp\w*', '', text, flags=re.IGNORECASE)
         
-#         # Remove variations of "post"
-#         text = re.sub(r'post\w*', '', text, flags=re.IGNORECASE)
+        # Remove variations of "post"
+        text = re.sub(r'post\w*', '', text, flags=re.IGNORECASE)
         
-#         # Remove variations of "delivery"
-#         text = re.sub(r'delivery\w*', '', text, flags=re.IGNORECASE)
+        # Remove variations of "delivery"
+        text = re.sub(r'delivery\w*', '', text, flags=re.IGNORECASE)
         
-#         # Remove variations of "parcel"
-#         text = re.sub(r'parcel\w*', '', text, flags=re.IGNORECASE)
+        # Remove variations of "parcel"
+        text = re.sub(r'parcel\w*', '', text, flags=re.IGNORECASE)
         
-#         # Remove variations of "day"
-#         text = re.sub(r'day\w*', '', text, flags=re.IGNORECASE)
+        # Remove variations of "day"
+        text = re.sub(r'day\w*', '', text, flags=re.IGNORECASE)
 
         # Tokenize the text and convert to lowercase
         tokens = word_tokenize(text)
