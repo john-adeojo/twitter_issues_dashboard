@@ -1,0 +1,18 @@
+Row Labels,Count of cleaned_text
+"['adidas', 'suck', 'know', 'reply']",1
+"['area', 'letter', 'working', 'vacancy']",15
+"['client', 'meet', 'guaranteed', 'special']",9
+"['collecting', 'philately', 'philatelist', 'pack']",37
+"['driving', 'infoapply', 'job', 'cleaning']",28
+"['ebay', 'check', 'box', 'vii']",5
+"['electric', 'van', 'electricvehicles', 'ev']",22
+"['gt', '65p', 'price', 'announces']",11
+"['letter', 'letterbox', 'mailbox', 'aussieletterboxes']",11
+"['plc', 'net', 'short', 'declares']",9
+"['reply', 'royalletters', 'royalreply', 'duchess']",7
+"['service', 'mail', 'letter', 'strike']",882
+"['tfl', 'londonisopen', 'online', 'job']",20
+"['wace', 'position', 'plc', 'short']",12
+"['woocommerce', 'shipping', 'plugin', 'using']",13
+(blank),
+Grand Total,1082
