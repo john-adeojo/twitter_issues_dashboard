@@ -6,10 +6,11 @@ from transformers import AutoTokenizer
 
 
 class DataPipeline:
-    def __init__(self, df, target_col, model, random_state=42):
+    def __init__(self, df, target_col, text, model, random_state=42):
         self.df = df
         self.model = model
         self.target_col = target_col
+        self.text = text
         self.random_state = random_state
 
         # split into train and test sets
@@ -29,71 +30,54 @@ class DataPipeline:
         )
 
         # initialize tokenizer
-        self.tokenizer = AutoTokenizer.from_pretrained(model)
+        self.tokenizer = AutoTokenizer.from_pretrained(self.model)
+        
+    def get_encodings(self, df):
+        text = list(df[self.text])
+        encodings = self.tokenizer(text, truncation=True, padding=True)
+        labels = list(df[self.target_col])
+        return encodings, labels
+        
 
-    def get_train_data(self, batch_size=16):
-        train_dataset = TextClassificationDataset(
-            self.train_df,
-            target_col=self.target_col,
-            tokenizer=self.tokenizer,
-            max_len=514,
-            model=self.model
-        )
-        train_loader = DataLoader(train_dataset, batch_size=batch_size)
-        return train_loader
+    def get_train_data(self):
+        
+        encodings, labels = self.get_encodings(self.train_df)
+        self.train_dataset = TextClassificationDataset(encodings, labels)
+        return self.train_dataset
 
-    def get_val_data(self, batch_size=16):
-        val_dataset = TextClassificationDataset(
-            self.val_df,
-            target_col=self.target_col,
-            tokenizer=self.tokenizer,
-            max_len=514,
-            model=self.model
-        )
-        val_loader = DataLoader(val_dataset, batch_size=batch_size)
-        return val_loader
+    def get_val_data(self):
+        
+        encodings, labels = self.get_encodings(self.val_df)
+        self.val_dataset = TextClassificationDataset(encodings, labels)
+       
+        return self.val_dataset
 
-    def get_test_data(self, batch_size=16):
-        test_dataset = TextClassificationDataset(
-            self.test_df,
-            target_col=self.target_col,
-            tokenizer=self.tokenizer,
-            max_len=514,
-            model=self.model
-        )
-        test_loader = DataLoader(test_dataset, batch_size=batch_size)
-        return test_loader
+    def get_test_data(self):
+        
+        encodings, labels = self.get_encodings(self.test_df)
+        self.test_dataset = TextClassificationDataset(encodings, labels)
+       
+        return self.test_dataset
 
 
 class TextClassificationDataset(Dataset):
-    def __init__(self, df, target_col, tokenizer, max_len, model):
-        self.df = df
-        self.target_col = target_col
-        self.tokenizer = tokenizer
-        self.max_len = max_len
-        self.model = model
-
-    def __len__(self):
-        return len(self.df)
+    def __init__(self, encodings, labels):
+        self.encodings = encodings
+        self.labels = labels
 
     def __getitem__(self, idx):
-        text = self.df.iloc[idx]['cleaned_text']
-        target = self.df.iloc[idx][self.target_col]
+        item = {key: torch.tensor(val[idx]) for key, val in self.encodings.items()}
+        item["labels"] = torch.tensor(self.labels[idx])
+        return item
 
-        encoding = self.tokenizer(
-            text,
-            max_length=self.max_len,
-            padding='max_length',
-            truncation=True,
-            return_attention_mask=True,
-            return_tensors='pt'
-        )
+    def __len__(self):
+        return len(self.labels)   
+    
 
-        input_ids = encoding['input_ids'].squeeze(0)
-        attention_mask = encoding['attention_mask'].squeeze(0)
-
-        return {
-            'input_ids': input_ids,
-            'attention_mask': attention_mask,
-            'target': torch.tensor(target)
-        }
+    
+    
+    
+    
+    
+    
+    

@@ -22,9 +22,9 @@ class TransformerFineTuner:
             num_train_epochs=3,              # total number of training epochs
             fp16=True,                       # precision choice to preserve memory on GPU
             gradient_accumulation_steps=4,   # batch size for calculating gradients  
-            per_device_train_batch_size=4,   # batch size per device during training
+            per_device_train_batch_size=1,   # batch size per device during training
             per_device_eval_batch_size=64,   # batch size for evaluation
-            warmup_steps=500,                # number of warmup steps for learning rate scheduler
+            warmup_steps=100,                # number of warmup steps for learning rate scheduler
             weight_decay=0.01,               # strength of weight decay
             logging_dir=self.logging_dir,    # directory for storing logs
             logging_steps=25,
@@ -36,8 +36,8 @@ class TransformerFineTuner:
         trainer = Trainer(
             model=model,
             args=training_args,
-            train_dataset=self.train_loader.dataset,
-            eval_dataset=self.val_loader.dataset,
+            train_dataset=self.train_loader,
+            eval_dataset=self.val_loader,
         )
 
         # Train the model
