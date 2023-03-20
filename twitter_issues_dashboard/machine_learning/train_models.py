@@ -13,21 +13,23 @@ class TransformerFineTuner:
     def train(self):
         # Define model
         model = AutoModelForSequenceClassification.from_pretrained(self.model_name, num_labels=self.num_labels)
-
+        device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+        model.to(device)
+        torch.optim.AdamW
         # Define training arguments
         training_args = TrainingArguments(
             output_dir=self.output_dir,           
             num_train_epochs=3,              # total number of training epochs
             fp16=True,                       # precision choice to preserve memory on GPU
             gradient_accumulation_steps=4,   # batch size for calculating gradients  
-            per_device_train_batch_size=16,  # batch size per device during training
+            per_device_train_batch_size=4,   # batch size per device during training
             per_device_eval_batch_size=64,   # batch size for evaluation
             warmup_steps=500,                # number of warmup steps for learning rate scheduler
             weight_decay=0.01,               # strength of weight decay
             logging_dir=self.logging_dir,    # directory for storing logs
             logging_steps=25,
             evaluation_strategy="steps",
-            load_best_model_at_end=True,
+            load_best_model_at_end=True
         )
 
         # Define trainer
