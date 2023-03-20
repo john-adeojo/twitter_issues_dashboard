@@ -6,12 +6,13 @@ from transformers import AutoTokenizer
 
 
 class DataPipeline:
-    def __init__(self, df, target_col, text, model, random_state=42):
+    def __init__(self, df, target_col, text, model, save_data, random_state=42):
         self.df = df
         self.model = model
         self.target_col = target_col
         self.text = text
         self.random_state = random_state
+        self.save_data = save_data
 
         # split into train and test sets
         self.train_df, self.test_df = train_test_split(
@@ -28,6 +29,13 @@ class DataPipeline:
             test_size=0.2,
             random_state=self.random_state
         )
+        
+        # save data sets 
+        
+        if self.save_data == True:
+            self.train_df.to_csv(r"C:\Users\johna\anaconda3\envs\twitter-analytics-env\twitter_issues_dashboard\twitter_issues_dashboard\data\03_feature_bank\train_df.csv")
+            self.val_df.to_csv(r"C:\Users\johna\anaconda3\envs\twitter-analytics-env\twitter_issues_dashboard\twitter_issues_dashboard\data\03_feature_bank\val_df.csv")
+            self.test_df.to_csv(r"C:\Users\johna\anaconda3\envs\twitter-analytics-env\twitter_issues_dashboard\twitter_issues_dashboard\data\03_feature_bank\test_df.csv")
 
         # initialize tokenizer
         self.tokenizer = AutoTokenizer.from_pretrained(self.model)

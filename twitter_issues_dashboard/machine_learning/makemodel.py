@@ -20,18 +20,20 @@ df['topic_hl_encoded'] = df['topic_hl'].astype("category").cat.codes
 
 
 # prepare data sets
-pipeline = DataPipeline(df, target_col='topic_hl_encoded', text='cleaned_text', model='cardiffnlp/twitter-roberta-base')
+pipeline = DataPipeline(df, target_col='topic_hl_encoded', text='cleaned_text', model='cardiffnlp/twitter-roberta-base', save_data=True)
 train_loader = pipeline.get_train_data()
 val_loader = pipeline.get_val_data()
 test_loader = pipeline.get_test_data()
-# torch.save(test_loader, r'C:\Users\johna\anaconda3\envs\twitter-analytics-env\twitter_issues_dashboard\twitter_issues_dashboard\data\03_feature_bank\test_dataset.pt')
+torch.save(test_loader, r'C:\Users\johna\anaconda3\envs\twitter-analytics-env\twitter_issues_dashboard\twitter_issues_dashboard\data\03_feature_bank\test_dataset.pt')
+torch.save(train_loader, r'C:\Users\johna\anaconda3\envs\twitter-analytics-env\twitter_issues_dashboard\twitter_issues_dashboard\data\03_feature_bank\train_dataset.pt')
+torch.save(val_loader, r'C:\Users\johna\anaconda3\envs\twitter-analytics-env\twitter_issues_dashboard\twitter_issues_dashboard\data\03_feature_bank\val_dataset.pt')
 
 # train model
 
 transformer_fine_tuner = TransformerFineTuner(train_loader=train_loader, 
                                               val_loader=val_loader, 
                                               model_name='cardiffnlp/twitter-roberta-base', 
-                                              num_labels=7, 
+                                              num_labels=6, 
                                               output_dir=r"C:\Users\johna\OneDrive\Desktop\models_twitter_dash\output", 
                                               logging_dir=r"C:\Users\johna\OneDrive\Desktop\models_twitter_dash\logging")
 transformer_fine_tuner.train()
