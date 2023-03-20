@@ -13,7 +13,8 @@ class TextCleaner():
         self.stop_words.add('christmas')
         self.stop_words.add('royalmailhelp')
         self.stop_words.add('help')
-        self.stop_words.add('stamp')
+        self.stop_words.add('gt')
+        # self.stop_words.add('stamp')
         self.lemmatizer = WordNetLemmatizer()
         
     def clean_text(self, text):
@@ -36,22 +37,22 @@ class TextCleaner():
         text = re.sub(r'royal\s*mail', '', text, flags=re.IGNORECASE)
         
         # Remove variations of "stamp"
-#         text = re.sub(r'stamp\w*', '', text, flags=re.IGNORECASE)
+        text = re.sub(r'stamp\w*', '', text, flags=re.IGNORECASE)
         
-#         # Remove variations of "post"
-#         text = re.sub(r'post\w*', '', text, flags=re.IGNORECASE)
+        # Remove variations of "post"
+        text = re.sub(r'post\w*', '', text, flags=re.IGNORECASE)
         
-#         # Remove variations of "delivery"
-#         text = re.sub(r'delivery\w*', '', text, flags=re.IGNORECASE)
+        # Remove variations of "delivery"
+        text = re.sub(r'delivery\w*', '', text, flags=re.IGNORECASE)
         
-#         # Remove variations of "delivered"
-#         text = re.sub(r'delivered\w*', '', text, flags=re.IGNORECASE)
+        # Remove variations of "delivered"
+        text = re.sub(r'delivered\w*', '', text, flags=re.IGNORECASE)
         
-#         # Remove variations of "parcel"
-#         text = re.sub(r'parcel\w*', '', text, flags=re.IGNORECASE)
+        # Remove variations of "parcel"
+        text = re.sub(r'parcel\w*', '', text, flags=re.IGNORECASE)
         
-#         # Remove variations of "worker"
-#         text = re.sub(r'worker\w*', '', text, flags=re.IGNORECASE)
+        # Remove variations of "worker"
+        text = re.sub(r'worker\w*', '', text, flags=re.IGNORECASE)
 
         # Remove variations of "day"
         text = re.sub(r'day\w*', '', text, flags=re.IGNORECASE)

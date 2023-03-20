@@ -13,6 +13,7 @@ class TextCleaner():
         self.stop_words.add('christmas')
         self.stop_words.add('royalmailhelp')
         self.stop_words.add('help')
+        self.stop_words.add('gt')
         # self.stop_words.add('stamp')
         self.lemmatizer = WordNetLemmatizer()
         
