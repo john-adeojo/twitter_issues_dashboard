@@ -1,8 +1,7 @@
-topic_hl_encoded,topic_hl
-0,Customer Service
-6,Royal Reply
-4,Politics
-5,Royal Mail Jobs
-1,Finance News
-2,Philately
-3,Politcs
+,topic_hl_encoded,topic_hl
+0,0,Customer Service
+2207,1,Financial News
+2386,2,Philately
+2004,3,Politics
+2115,4,Royal Mail Jobs
+1938,5,Royal Reply
