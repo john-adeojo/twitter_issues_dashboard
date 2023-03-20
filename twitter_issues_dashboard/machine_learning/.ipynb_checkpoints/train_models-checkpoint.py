@@ -1,5 +1,6 @@
 import torch
-from transformers import AutoModelForSequenceClassification, TrainingArguments, Trainer
+from transformers import AutoModelForSequenceClassification, TrainingArguments, Trainer, AutoTokenizer
+from machine_learning.customer_trainer import CustomTrainer
 
 class TransformerFineTuner:
     def __init__(self, train_loader, val_loader, model_name, num_labels, output_dir, logging_dir):
@@ -12,7 +13,13 @@ class TransformerFineTuner:
         
     def train(self):
         # Define model
-        model = AutoModelForSequenceClassification.from_pretrained(self.model_name, num_labels=self.num_labels)
+        
+        # hard coded, need to automate later
+        label2id = {'Customer Service': 0, 'Financial News': 1, 'Philately': 2, 'Politics': 3, 'Royal Mail Jobs': 4, 'Royal Reply': 5}
+        id2label = {0: 'Customer Service', 1: 'Financial News', 2: 'Philately', 3: 'Politics', 4: 'Royal Mail Jobs', 5: 'Royal Reply'}
+                
+        
+        model = AutoModelForSequenceClassification.from_pretrained(self.model_name, num_labels=self.num_labels, id2label=id2label, label2id=label2id)
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         model.to(device)
         torch.optim.AdamW
@@ -33,7 +40,7 @@ class TransformerFineTuner:
         )
 
         # Define trainer
-        trainer = Trainer(
+        trainer = CustomTrainer(
             model=model,
             args=training_args,
             train_dataset=self.train_loader,

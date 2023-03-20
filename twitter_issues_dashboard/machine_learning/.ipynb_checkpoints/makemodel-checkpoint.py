@@ -36,4 +36,5 @@ transformer_fine_tuner = TransformerFineTuner(train_loader=train_loader,
                                               num_labels=6, 
                                               output_dir=r"C:\Users\johna\OneDrive\Desktop\models_twitter_dash\output", 
                                               logging_dir=r"C:\Users\johna\OneDrive\Desktop\models_twitter_dash\logging")
+
 transformer_fine_tuner.train()
