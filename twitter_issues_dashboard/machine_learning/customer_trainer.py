@@ -1,26 +1,8 @@
 import torch
 from torch import nn
 import torch.nn.functional as F
-#from torch.nn.functional as F
 import transformers
 from transformers import Trainer
-
-
-# custom class for computing focal loss
-# class FocalLoss(nn.Module):
-#     def __init__(self, alpha=0.25, gamma=2, reduction='mean'):
-#         super(FocalLoss, self).__init__()
-#         self.alpha = alpha
-#         self.gamma = gamma
-#         self.reduction = reduction
-
-#     def forward(self, input, target):
-#         logpt = F.log_softmax(input, dim=1)
-#         pt = torch.exp(logpt)
-#         logpt = (1 - pt) ** self.gamma * logpt
-#         loss = F.nll_loss(logpt, target, reduction=self.reduction)
-#         return self.alpha * loss
-
 
 
 class FocalLoss(nn.Module):
